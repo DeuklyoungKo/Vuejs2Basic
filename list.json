@@ -1,0 +1,5 @@
+[
+    {"id":1, "nme":"Slime", "hp":100 },
+    {"id":2, "nme":"Goblin", "hp":200 },
+    {"id":3, "nme":"Dragon", "hp":500 }
+]

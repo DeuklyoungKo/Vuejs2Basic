@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="utf-8">
+        <title>Vue.js App</title>
+        <style>
+
+
+            @keyframe cloak-in {
+                0% { opacity:"0";}
+            }
+
+            #app{
+                animation: cloak-in 1s;
+            }
+
+            #app[v-cloak] {
+                opacity:0;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="app" v-cloak>
+            <div style="margin:20px"><a href="/">Home</a></div>
+            <div>
+                <a v-bind:href="url" v-pre>
+                    v-pre : {{ message }}                    
+                </a><br>
+                <a v-bind:href="url" v-once>
+                    v-once : {{ message }}                    
+                </a>
+                <br>                               
+                <a v-bind:href="url" v-text="'v-text : '+ message"></a>
+                <br/>                               
+                <a v-bind:href="url" v-html="'v-html : '+ message2"></a>
+                <br/>                   
+                <a v-bind:href="url">
+                    default : {{ message }}                    
+                </a>                               
+
+            </div>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <script>
+            var app = new Vue({
+                el: '#app',
+                data:{
+                    message: "how to control template",
+                    message2: "how to <strong style='color:red'>control</strong> template",
+                    url: "/"
+
+                },
+                methods:{
+                    handleClick(){
+                        var count = this.$refs.count
+                        if (count) {
+                            count.innerText = parseInt(count.innnertext,10) + 1
+                        }
+                    }
+                },
+                mounted(){
+                    this.message = "changed message value"
+                }
+            })
+        </script>
+    </body>
+</html>

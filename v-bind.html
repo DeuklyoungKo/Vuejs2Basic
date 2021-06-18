@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="utf-8">
+        <title>Vue.js App</title>
+    </head>
+    <body>
+        <div id="app">
+            <div v-text="message"></div>
+            <div v-bind:scroll-top.prop="scroll">
+                hi!<br>
+                hi!<br>
+                hi!<br>
+                hi!<br>
+                hi!<br>
+                hi!<br>
+                hi!<br>
+            </div>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <script>
+            var app = new Vue({
+                el: '#app',
+                data: {
+                    message: 'Hello Vue.js!',
+                    scroll: 0
+                },
+                mounted: function(){
+                    this.scroll = 1000
+                }
+            })
+        </script>
+    </body>
+</html>

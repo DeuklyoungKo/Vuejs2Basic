@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="utf-8">
+        <title>Vue.js App</title>
+    </head>
+    <body>
+        <div id="app">
+            <div><a href="/">Home</a></div>
+            <ul>
+                <li v-for="(item, index) in list" v-bind:key="item.id" v-if="item.hp">
+                    ID.{{item.id}} {{item.name}} HP.{{ item.hp}}
+                    <span v-if="item.hp < 50">Great Dameged!!</span>
+                    <button v-on:click="doAttack(index)">Attack!!</button>
+                </li>
+            </ul>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <script>
+            var app = new Vue({
+                el: '#app',
+                data: {
+                    list:[
+                        {id:1, name:'Slime',hp:100},
+                        {id:2, name:'Goblin',hp:200},
+                        {id:3, name:'Dragon',hp:500},
+                    ]
+                },
+                methods: {
+                    doAttack: function(index) {
+                        this.list[index].hp -= 10;
+                    }
+                }
+            })
+        </script>
+    </body>
+</html>
