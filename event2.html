@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="utf-8">
+        <title>Vue.js App</title>
+        <style>
+            img {
+                opacity: 1;
+                transition: opacity 5s;
+            }
+
+            img.hide {
+                opacity: 0;
+            }
+
+            div {
+                margin:20px;
+            }
+
+            .bigDiv{
+                height:100px;
+                background-color: #aacccc;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="app">
+            <div><a href="/">Home</a></div>
+            <div v-on:click.right="handler" class="bigDiv">click.right widthout prevent example</div>
+            <div v-on:click.right.prevent="handler" class="bigDiv">click.right prevent example</div>
+            
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <script>
+            var app = new Vue({
+                el: '#app',
+                data:{
+                    show: false,
+                    message:'hello Vue.js',
+                },
+                methods:{
+                    handler(event){
+                        console.log("handleInput is working : "+event.target);
+                    }
+                }
+            })
+        </script>
+    </body>
+</html>

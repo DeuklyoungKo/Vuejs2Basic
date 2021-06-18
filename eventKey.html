@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="utf-8">
+        <title>Vue.js App</title>
+        <style>
+            img {
+                opacity: 1;
+                transition: opacity 5s;
+            }
+
+            img.hide {
+                opacity: 0;
+            }
+
+            div {
+                margin:20px;
+            }
+
+            .bigDiv{
+                height:100px;
+            }
+
+            .colorRed{
+                background-color: red;
+            }
+            .colorGray{
+                background-color: #ccc;
+            }            
+        </style>
+    </head>
+    <body>
+        <div id="app">
+            <div><a href="/">Home</a></div>
+            <div>
+                keydown.up.down.left.right<br>
+                <input v-on:keydown.up.down.left.right="handler('moveKey')">
+            </div>
+            <div>
+                keydown.down.ctrl<br>
+                <input v-on:keydown.down.ctrl="handler('down.ctrl Key')">
+            </div>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <script>
+            var app = new Vue({
+                el: '#app',
+                data:{
+                    show: false,
+                    message:'hello Vue.js',
+                },
+                methods:{
+                    handler(comment){
+                        console.log("clickEvent is working / comment: "+comment);
+                    }
+                }
+            })
+        </script>
+    </body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="utf-8">
+        <title>Vue.js App</title>
+        <style>
+            img {
+                opacity: 1;
+                transition: opacity 5s;
+            }
+
+            img.hide {
+                opacity: 0;
+            }
+
+            div {
+                margin:20px;
+            }
+
+            .bigDiv{
+                height:100px;
+                background-color: #aacccc;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="app">
+            <div><a href="/">Home</a></div>
+            <div>
+                <img src="./images/image.png" v-on:load="show=true" v-bind:class="{hide:!show}">
+            </div>
+            <div v-on:scroll.passive="handlerScroll" class="bigDiv">
+                Contents1
+            </div>
+            <div v-on:mousewheel="handlerMouseWheel" class="bigDiv">
+                Contents2
+            </div>
+            <div v-on:dragstart="handlerDragStart" class="bigDiv" draggable>
+                Contents2
+            </div>
+            <div>
+                <input v-bind:value="message" v-on:input="handleInput">
+            </div>
+
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <script>
+            var app = new Vue({
+                el: '#app',
+                data:{
+                    show: false,
+                    message:'hello Vue.js',
+                },
+                methods:{
+                    handlerScroll(){
+                        console.log("handlerScroll is working");
+                    },
+                    handlerMouseWheel(){
+                        console.log("handlerMouseWheel is working");
+                    },                    
+                    handlerDragStart(){
+                        console.log("handlerDragStart is working");
+                    },
+                    handleInput(event){
+                        console.log("handleInput is working");
+                        this.message = event.target.value+":11";
+                    }
+                }
+            })
+        </script>
+    </body>
+</html>
