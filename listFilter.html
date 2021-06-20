@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="utf-8">
+        <title>Vue.js App</title>
+        <style>
+            img {
+                opacity: 1;
+                transition: opacity 5s;
+            }
+
+            img.hide {
+                opacity: 0;
+            }
+
+            div {
+                margin:20px;
+            }
+
+            .bigDiv{
+                height:100px;
+                background-color: #aacccc;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="app">
+            <div><a href="/">Home</a></div>
+            <div>
+                <input v-model.number="budget">원 이하 필터링하기
+                <input v-model.number="limit">개의 결과 출력하기
+                <p>{{matched.length}}개 중에 {{limited.length}}개를 출력하고 있습니다.</p>
+                <ul>
+                    <li v-for="item in limited" v-bind:key="item.id">
+                        {{item.name}} {{item.price}}원
+                    </li>
+                </ul>
+                <button v-on:click="order=!order">Changing</button>
+            </div>
+        </div>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js" integrity="sha512-WFN04846sdKMIP5LKNphMaWzU7YpMyCU245etK3g/2ARYbPK9Ub18eG+ljU96qKRCWh+quCY7yefSmlkQw1ANQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <script>
+
+            var app = new Vue({
+                el: '#app',
+                data:{
+                    budget: 300,
+                    limit: 2,
+                    list:[
+                        {id:1, name:'Apple', price:100},
+                        {id:2, name:'Banana', price:200},
+                        {id:3, name:'Strawberry', price:400},
+                        {id:4, name:'Orange', price:300},
+                        {id:5, name:'Melon', price:500},
+                    ],
+                    order:false,
+                },
+                computed: {
+                    matched: function(){
+                        return this.list.filter(function(el){
+                            return el.price <= this.budget
+                        }, this)
+                    },
+                    // limited: function(){
+                    //     return this.matched.slice(0, this.limit)
+                    // }
+                    sorted: function(){
+                        return _.orderBy(this.matched, 'price', this.order ? 'desc' : 'asc')
+                    },
+                    limited: function(){
+                        return this.sorted.slice(0, this.limit)
+                    }
+                }
+            })
+        </script>
+    </body>
+</html>
