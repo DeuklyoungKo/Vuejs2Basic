@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="utf-8">
+        <title>Vue.js App</title>
+        <style>
+            img {
+                opacity: 1;
+                transition: opacity 5s;
+            }
+
+            img.hide {
+                opacity: 0;
+            }
+
+            div {
+                margin:20px;
+            }
+
+            .bigDiv{
+                height:100px;
+                background-color: #aacccc;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="app">
+            <div><a href="/">Home</a></div>
+            <div>
+                <ul>
+                    <comp-child v-for="item in list"
+                        v-bind:key="item.id" v-bind="item"
+                        v-on:attack="handleAttack"
+                        ref="child"></comp-child>
+                </ul>
+            </div>
+            <div>
+                <button v-on:click="doAttackAll">doAttackAll</button>
+            </div>
+        </div>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js" integrity="sha512-WFN04846sdKMIP5LKNphMaWzU7YpMyCU245etK3g/2ARYbPK9Ub18eG+ljU96qKRCWh+quCY7yefSmlkQw1ANQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        <script>
+
+            Vue.component('comp-child',{
+                template: '<li>{{name}} HP.{{hp}} <button v-on:click="doAttack">Attack</button></li>',
+                props: { id:Number, name:String, hp:Number},
+                methods:{
+                    doAttack: function(){
+                        console.log("doAttack!!");
+                        this.$emit('attack', this.id)
+                    },
+                }
+            })
+
+            var app = new Vue({
+                el: '#app',
+                data: {
+                    list:[
+                        {id:1, name:'Slime',hp:100},
+                        {id:2, name:'Goblin',hp:200},
+                        {id:3, name:'Dragon',hp:500},
+                    ]
+                },
+                methods:{
+                    handleAttack: function(id){
+                        var item = this.list.find(function(el){
+                            return el.id === id
+                        })
+                        
+                        if ( item !== undefined && item.hp > 0) item.hp -= 10
+                    },
+                    doAttackAll: function(){
+                        //console.log(this.$refs.child[0]);
+
+                        for(index in this.$refs.child){
+                            //console.log(index);
+                            this.$refs.child[index].doAttack();
+                        }
+
+                        this.$refs.child.forEach(element=>{
+                            console.log(element);
+                            element.doAttack();
+                        });
+                        //this.$refs.child.$emit('doAttack','1')
+                        //this.$refs.child[0].$emit('doAttack')
+                        //this.$refs.child.doAttack('1');
+                        //this.$refs.child[0].doAttack()
+                    }
+                }
+            })
+
+
+        </script>
+    </body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="utf-8">
+        <title>Vue.js App</title>
+        <style>
+            img {
+                opacity: 1;
+                transition: opacity 5s;
+            }
+
+            img.hide {
+                opacity: 0;
+            }
+
+            div {
+                margin:20px;
+            }
+
+            .bigDiv{
+                height:100px;
+                background-color: #aacccc;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="app">
+            <div><a href="/">Home</a></div>
+            <div>
+                <comp-child>
+                    <p slot-scope="props">
+                        text from slot -> {{props.text}}
+                    </p>
+                </comp-child>
+            </div>
+            <div>
+                <comp-child2>
+                    <li slot-scope="props">{{props.item}}</li>
+                </comp-child2>
+            </div>
+            
+        </div>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js" integrity="sha512-WFN04846sdKMIP5LKNphMaWzU7YpMyCU245etK3g/2ARYbPK9Ub18eG+ljU96qKRCWh+quCY7yefSmlkQw1ANQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        <script>
+
+            Vue.component('comp-child',{
+                template: '<div class="comp-child"><slot text="Hello!"></slot></div>',
+            })
+
+            Vue.component('comp-child2',{
+                template: '<ul class="comp-child2"><slot v-for="item in list" v-bind:item="item"></slot></ul>',
+                data: function(){
+                    return {
+                        list:["a","b","c","d"]
+                    }
+                }
+            })
+
+            var app = new Vue({
+                el: '#app',
+                data: {
+                    message:"Hello Vue.js!(header data of parents)"
+                },
+                
+            })
+
+        </script>
+    </body>
+</html>
