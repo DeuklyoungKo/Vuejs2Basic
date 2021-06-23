@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="utf-8">
+        <title>Vue.js App</title>
+        <style>
+            img {
+                opacity: 1;
+                transition: opacity 5s;
+            }
+
+            img.hide {
+                opacity: 0;
+            }
+
+            div {
+                margin:20px;
+            }
+
+            .bigDiv{
+                height:100px;
+                background-color: #aacccc;
+            }
+
+            .v-enter-active, .v-leave-active {
+                transition: opacity 1s;
+                position: absolute;
+            }
+
+            .v-enter, .v-leave-to {
+                opacity:0;
+            }
+
+            .v-move{
+                transition: transform 1s;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="app">
+            <div><a href="/">Home</a></div>
+            <div>
+                <button v-on:click="order=!order">changing</button>
+                <transition-group tag="ul" class="list">
+                    <li v-for="item in sortedList" v-bind:key="item.id">
+                        {{item.name}} {{item.price}}Won
+                    </li>
+                </transition-group>
+            </div>
+        </div>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js" integrity="sha512-WFN04846sdKMIP5LKNphMaWzU7YpMyCU245etK3g/2ARYbPK9Ub18eG+ljU96qKRCWh+quCY7yefSmlkQw1ANQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        <script>
+            var app = new Vue({
+                el: '#app',
+                data: {
+                    order: false,
+                    list:[
+                        {id:1, name:'Apple', price:100},
+                        {id:2, name:'Banana', price:200},
+                        {id:3, name:'Strawberry', price:300},
+                    ]
+                },
+                computed:{
+                    sortedList: function(){
+                        return _.orderBy(this.list, 'price', this.order ? 'desc' : 'asc')
+                    }
+                }
+            })
+        </script>
+    </body>
+</html>

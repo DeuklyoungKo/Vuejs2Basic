@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="utf-8">
+        <title>Vue.js App</title>
+        <style>
+            img {
+                opacity: 1;
+                transition: opacity 5s;
+            }
+
+            img.hide {
+                opacity: 0;
+            }
+
+            div {
+                margin:20px;
+            }
+
+            .bigDiv{
+                height:100px;
+                background-color: #aacccc;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="app">
+            <div><a href="/">Home</a></div>
+            <div>
+                <my-component
+                    v-bind:name.sync="name"
+                    v-bind:hp.sync="hp">
+                </my-component>
+            </div>
+        </div>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js" integrity="sha512-WFN04846sdKMIP5LKNphMaWzU7YpMyCU245etK3g/2ARYbPK9Ub18eG+ljU96qKRCWh+quCY7yefSmlkQw1ANQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        <script>
+
+            Vue.component('my-component',{
+                template: '<div class="my-component">\
+                    <p>name.{{name}} HP.{{hp}}</p>\
+                    <p>name <input v-model="localName"></p>\
+                    <p>HP <input size="5" v-model.number="localHp"></p>\
+                    </div>',
+                    props: {
+                        name: String,
+                        hp: Number
+                    },
+                    computed: {
+                        localName: {
+                            get: function(){
+                                console.log("start localName get");
+                                return this.name
+                            },
+                            set: function(val){
+                                console.log("start localName set");
+                                this.$emit('update:name', val)
+                            }
+                        },
+                        localHp: {
+                            get: function(){ return this.hp },
+                            set: function(val) { this.$emit('updated:hp', val) }
+                        }
+                    }
+            })
+
+            var app = new Vue({
+                el: '#app',
+                data: {
+                    name: 'Slime',
+                    hp: 100
+                }
+            })
+        </script>
+    </body>
+</html>
